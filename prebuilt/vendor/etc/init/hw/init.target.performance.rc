@@ -24,6 +24,8 @@ on boot
     write /sys/block/sda/queue/read_ahead_kb 512
 
 on charger
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+
     # Enable UFS powersaving
     write /sys/devices/soc/${ro.boot.bootdevice}/clkscale_enable 1
     write /sys/devices/soc/${ro.boot.bootdevice}/clkgate_enable 1
