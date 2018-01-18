@@ -22,6 +22,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.ListPreference;
 import android.preference.SwitchPreference;
+import android.preference.PreferenceGroup;
 import android.text.TextUtils;
 import android.view.MenuItem;
 
@@ -72,24 +73,24 @@ public class NodePreferenceActivity extends PreferenceActivity
         for (String pref : Constants.sBooleanNodePreferenceMap.keySet()) {
             SwitchPreference b = (SwitchPreference) findPreference(pref);
             if (b == null) continue;
-            b.setOnPreferenceChangeListener(this);
             String node = Constants.sBooleanNodePreferenceMap.get(pref);
             if (new File(node).exists()) {
                 String curNodeValue = FileUtils.readOneLine(node);
                 b.setChecked(curNodeValue.equals("1"));
+                b.setOnPreferenceChangeListener(this);
             } else {
-                b.setEnabled(false);
+                removePref(b);
             }
         }
         for (String pref : Constants.sStringNodePreferenceMap.keySet()) {
             ListPreference l = (ListPreference) findPreference(pref);
             if (l == null) continue;
-            l.setOnPreferenceChangeListener(this);
             String node = Constants.sStringNodePreferenceMap.get(pref);
             if (new File(node).exists()) {
                 l.setValue(FileUtils.readOneLine(node));
+                l.setOnPreferenceChangeListener(this);
             } else {
-                l.setEnabled(false);
+                removePref(l);
             }
         }
     }
@@ -103,5 +104,16 @@ public class NodePreferenceActivity extends PreferenceActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void removePref(Preference pref) {
+        PreferenceGroup parent = pref.getParent();
+        if (parent == null) {
+            return;
+        }
+        parent.removePreference(pref);
+        if (parent.getPreferenceCount() == 0) {
+            removePref(parent);
+        }
     }
 }
