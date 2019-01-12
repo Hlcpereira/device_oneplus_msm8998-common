@@ -1,10 +1,26 @@
 [
   {
-    "repository": "android_device_oppo_common",
-    "target_path": "device/oppo/common"
+    "remote":      "github",
+    "repository":  "Hlcpereira/kernel_oneplus_msm8998",
+    "target_path": "kernel/oneplus/msm8998",
+    "branch":      "P-KernelX"
   },
   {
-    "repository": "android_kernel_oneplus_msm8998",
-    "target_path": "kernel/oneplus/msm8998"
+    "remote":      "github",
+    "repository":  "Hlcpereira/vendor_oneplus",
+    "target_path": "vendor/oneplus",
+    "branch":      "pie"
+  },
+  {
+    "repository": "packages_apps_Playground",
+    "target_path": "packages/apps/Playground",
+    "branch": "pie",
+    "remote": "pixel-gitlab"
+  },
+  {
+    "repository": "packages_apps_WallpapersBReel2018",
+    "target_path": "packages/apps/WallpapersBReel2018",
+    "branch": "pie",
+    "remote": "pixel-gitlab"
   }
 ]
