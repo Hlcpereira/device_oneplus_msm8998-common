@@ -127,7 +127,8 @@ PRODUCT_COPY_FILES += \
 # ANT+
 PRODUCT_PACKAGES += \
     AntHalService \
-    com.dsi.ant.antradio_library
+    antradio_app \
+    libantradio
 
 # Bluetooth
 PRODUCT_PACKAGES += \
