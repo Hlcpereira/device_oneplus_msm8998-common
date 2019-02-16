@@ -359,6 +359,9 @@ PRODUCT_PACKAGES += \
     libOmxVenc \
     libstagefrighthw
 
+# Performance
+include vendor/qcom/common/qti-vendor.mk
+
 # Playground
 PRODUCT_PACKAGES += \
     Playground
