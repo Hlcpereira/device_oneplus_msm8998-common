@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016 The CyanogenMod Project
- * Copyright (c) 2018 The LineageOS Project
+ * Copyright (c) 2018-2019 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,44 +22,29 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.text.TextUtils;
 import android.util.Log;
 
-public class ProximitySensor implements SensorEventListener {
+import java.util.List;
 
+public class PocketSensor implements SensorEventListener {
     private static final boolean DEBUG = false;
-    private static final String TAG = "PocketModeProximity";
+    private static final String TAG = "PocketSensor";
 
-    private static final String CHEESEBURGER_FILE =
+    private static final String FPC_FILE =
             "/sys/devices/soc/soc:fpc_fpc1020/proximity_state";
-    private static final String DUMPLING_FILE =
+    private static final String GOODIX_FILE =
             "/sys/devices/soc/soc:goodix_fp/proximity_state";
-    private final String FPC_FILE;
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private Context mContext;
 
-    public ProximitySensor(Context context) {
-        boolean found = false;
+    public PocketSensor(Context context) {
         mContext = context;
         mSensorManager = mContext.getSystemService(SensorManager.class);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-
-        if (FileUtils.fileExists(CHEESEBURGER_FILE)) {
-            FPC_FILE = CHEESEBURGER_FILE;
-            found = true;
-        } else if (FileUtils.fileExists(DUMPLING_FILE)) {
-            FPC_FILE = DUMPLING_FILE;
-            found = true;
-        } else {
-            Log.e(TAG, "No proximity state file found!");
-            FPC_FILE = CHEESEBURGER_FILE;
+        mSensor = findSensorWithType("com.oneplus.sensor.pocket");
         }
-
-        if (found) {
-            if (DEBUG) Log.d(TAG, "Using proximity state from " + FPC_FILE);
-        }
-    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -72,10 +57,27 @@ public class ProximitySensor implements SensorEventListener {
     }
 
     private void setFPProximityState(boolean isNear) {
-        if (FileUtils.isFileWritable(FPC_FILE)) {
-            FileUtils.writeLine(FPC_FILE, isNear ? "1" : "0");
-        } else {
-            Log.e(TAG, "Proximity state file " + FPC_FILE + " is not writable!");
+        boolean found = false;
+        if (FileUtils.fileExists(FPC_FILE)) {
+            found = true;
+            if (found) {
+                if (DEBUG) Log.d(TAG, "Using proximity state from " + FPC_FILE);
+            }
+            if (FileUtils.isFileWritable(FPC_FILE)) {
+                FileUtils.writeLine(FPC_FILE, isNear ? "1" : "0");
+            } else {
+                Log.e(TAG, "Proximity state file " + FPC_FILE + " is not writable!");
+            }
+        } else if (FileUtils.fileExists(GOODIX_FILE)) {
+            found = true;
+            if (found) {
+                if (DEBUG) Log.d(TAG, "Using proximity state from " + GOODIX_FILE);
+            }
+            if (FileUtils.isFileWritable(GOODIX_FILE)) {
+                FileUtils.writeLine(GOODIX_FILE, isNear ? "1" : "0");
+            } else {
+                Log.e(TAG, "Proximity state file " + GOODIX_FILE + " is not writable!");
+            }
         }
     }
 
@@ -90,5 +92,18 @@ public class ProximitySensor implements SensorEventListener {
         mSensorManager.unregisterListener(this, mSensor);
         // Ensure FP is left enabled
         setFPProximityState(/* isNear */ false);
+    }
+
+    protected Sensor findSensorWithType(String type) {
+        if (TextUtils.isEmpty(type)) {
+            return null;
+        }
+        List<Sensor> sensorList = mSensorManager.getSensorList(Sensor.TYPE_ALL);
+        for (Sensor s : sensorList) {
+            if (type.equals(s.getStringType())) {
+                return s;
+            }
+        }
+        return null;
     }
 }
