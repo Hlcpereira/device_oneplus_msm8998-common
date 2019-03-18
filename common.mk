@@ -270,6 +270,16 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
 
+# Keyhandler
+PRODUCT_PACKAGES += \
+    ConfigPanel \
+    com.oneplus.keyhandler
+
+PRODUCT_SYSTEM_SERVER_JARS += com.oneplus.keyhandler
+
+# never dexopt the keyhandler
+$(call add-product-dex-preopt-module-config,com.oneplus.keyhandler,disable)
+
 # Keylayout
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,${LOCAL_PATH}/prebuilt/usr,$(TARGET_COPY_OUT_VENDOR)/usr)
