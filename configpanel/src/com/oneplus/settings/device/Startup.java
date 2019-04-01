@@ -97,7 +97,8 @@ public class Startup extends BroadcastReceiver {
     private boolean hasButtonProcs () {
         return (new File(Constants.NOTIF_SLIDER_TOP_NODE).exists() &&
                 new File(Constants.NOTIF_SLIDER_MIDDLE_NODE).exists() &&
-                new File(Constants.NOTIF_SLIDER_BOTTOM_NODE).exists());
+                new File(Constants.NOTIF_SLIDER_BOTTOM_NODE).exists()) ||
+                new File(Constants.BUTTON_SWAP_NODE).exists();
     }
 
     private void disableComponent(Context context, String component) {
