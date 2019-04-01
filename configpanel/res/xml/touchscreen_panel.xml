@@ -44,15 +44,6 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/button_dashboard_summary">
-
-        <SwitchPreference
-            android:key="button_swap"
-            android:title="@string/button_swap_title"
-            android:summary="@string/button_swap_summary" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/screen_gestures_summary">
 
         <SwitchPreference

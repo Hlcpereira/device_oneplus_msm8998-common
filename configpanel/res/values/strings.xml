@@ -34,11 +34,6 @@
     • Two fingers vertically \"||\" to play/pause\n
     • Draw left arrow \"&#60;\" for previous track\n
     • Draw right arrow \"&#62;\" for next track</string>
-
-    <!-- Button settings  -->
-    <string name="button_dashboard_summary">Buttons</string>
-    <string name="button_swap_title">Swap buttons</string>
-    <string name="button_swap_summary">Swap the order of recents and back buttons</string>
     <string name="haptic_feedback">Haptic feedback</string>
     <string name="haptic_feedback_summary">Vibrate when a gesture gets detected</string>
 
