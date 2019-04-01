@@ -22,11 +22,5 @@
     "target_path": "packages/apps/WallpapersBReel2018",
     "branch": "pie",
     "remote": "pixel-gitlab"
-  },
-  {
-    "repository": "Hlcpereira/packages_apps_GoogleCameraMod",
-    "target_path": "packages/apps/GoogleCameraMod-OP5",
-    "branch": "pie-oneplus5",
-    "remote": "gitlab"
   }
 ]
