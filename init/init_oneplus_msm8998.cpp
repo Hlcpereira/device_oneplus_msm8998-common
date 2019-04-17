@@ -204,7 +204,7 @@ void vendor_load_properties() {
     if (platform != ANDROID_TARGET)
         return;
 
-    // fingerprint
+    // Misc stuff
     if (ReadFileToString(DEVINFO_FILE, &device)) {
         if (!strncmp(device.c_str(), "16859", 5)) {
             // Oneplus 5
@@ -215,5 +215,8 @@ void vendor_load_properties() {
             property_override("ro.build.description", "OnePlus5T-user 9 PKQ1.180716.001 1902221914 release-keys");
         }
     }
-    property_override_dual("ro.build.fingerprint", "ro.vendor.build.fingerprint", "google/walleye/walleye:8.1.0/OPM1.171019.011/4448085:user/release-keys");
+    property_override_dual("ro.build.fingerprint", "ro.vendor.build.fingerprint", "google/crosshatch/crosshatch:9/PQ1A.190105.004/5148680:user/release-keys");
+    property_override("ro.product.model", "Pixel 3 XL");
+    property_override("ro.product.name", "crosshatch");
+    property_override("ro.product.device", "crosshatch");
 }
