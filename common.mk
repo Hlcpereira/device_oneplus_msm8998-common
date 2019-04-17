@@ -476,6 +476,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.weaver@1.0
 
+#Wellbeing profile
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilt/etc/PhenotypePrefs.xml:$system/etc/PhenotypePrefs.xml \
+
 # Wifi
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
