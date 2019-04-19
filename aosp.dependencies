@@ -1,5 +1,9 @@
 [
   {
+    "repository": "device_oneplus_common",
+    "target_path": "device/oneplus/common"
+  }
+  {
     "remote":      "github",
     "repository":  "Hlcpereira/kernel_oneplus_msm8998",
     "target_path": "kernel/oneplus/msm8998",
